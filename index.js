@@ -39,12 +39,12 @@ app.use(
   session({
     secret: process.env.sessionSecret,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: true,  // new uninitialized session will be saved
     cookie: { maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize()); // passport library initialization for authentication
+app.use(passport.session());  // read and attach information to 'req.user' object
 
 // home route
 app.get('/', (req, res) => {
