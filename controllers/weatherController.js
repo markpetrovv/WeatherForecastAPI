@@ -3,9 +3,7 @@ const axios = require('axios');
 const apiKey = '2b0178ed403a29a18c24969970737398';
 const baseUrl = 'http://api.openweathermap.org/data/2.5/weather';
 
-async function getWeatherData(req, res) {
-  const location = req.query.location;
-
+async function getWeatherData(location) {
   let queryUrl;
   if (isNaN(location)) {
     queryUrl = `${baseUrl}?q=${location}&appid=${apiKey}&units=metric`;
@@ -15,8 +13,10 @@ async function getWeatherData(req, res) {
     const [lat, lon] = location.split(',');
     queryUrl = `${baseUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
   } else {
-    return res.render('weather', { error: 'Invalid location' });
+    throw new Error('Invalid location');
   }
+
+  console.log(`Fetching weather data from URL: ${queryUrl}`);
 
   try {
     const response = await axios.get(queryUrl);
@@ -25,14 +25,16 @@ async function getWeatherData(req, res) {
       const temp = data.main.temp;
       const city = data.name;
       const country = data.sys.country;
-      res.render('weather', { temp, city, country });
+      return { temp, city, country };
     } else {
-      res.render('weather', { error: `Error ${response.status}: ${response.statusText}` });
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
   } catch (error) {
-    res.render('weather', { error: 'Unable to fetch weather data' });
+    console.error('Error fetching weather data:', error);
+    throw new Error('Unable to fetch weather data');
   }
 }
+
 
 module.exports = {
   getWeatherData,
