@@ -3,7 +3,7 @@ const axios = require('axios');
 const apiKey = '2b0178ed403a29a18c24969970737398';
 const baseUrl = 'http://api.openweathermap.org/data/2.5/weather';
 
-async function getWeatherData(location, socket) {
+async function getWeatherData(location) {
   let queryUrl;
   if (isNaN(location)) {
     queryUrl = `${baseUrl}?q=${location}&appid=${apiKey}&units=metric`;
@@ -25,10 +25,6 @@ async function getWeatherData(location, socket) {
       const temp = data.main.temp;
       const city = data.name;
       const country = data.sys.country;
-
-      // Send the new temperature to all clients
-      socket.emit('temperatureUpdate', temp);
-      
       return { temp, city, country };
     } else {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -38,6 +34,7 @@ async function getWeatherData(location, socket) {
     throw new Error('Unable to fetch weather data');
   }
 }
+
 
 module.exports = {
   getWeatherData,
