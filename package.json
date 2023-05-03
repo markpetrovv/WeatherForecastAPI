@@ -2,19 +2,27 @@
   "name": "weatherforecastapi",
   "version": "1.0.0",
   "description": "This project is a Weather Forecast API done by HAMK students Mark Petrov, Vjatšeslav Semjonov and Tanika Syrijälä. It is designed to make searches by city, zip code, or geographic coordinates and fetch real-time data using public API.",
-  "main": "routes/index.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.3.6",
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-handlebars": "^7.0.7",
-    "mongoose": "^7.0.5",
+    "express-session": "^1.17.3",
+    "handlebars": "^4.7.7",
+    "mongodb": "^5.3.0",
+    "mongoose": "^7.1.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "socket.io": "^4.6.1"
   },
   "devDependencies": {
