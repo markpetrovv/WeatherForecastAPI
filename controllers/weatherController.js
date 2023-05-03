@@ -3,15 +3,7 @@ const axios = require('axios');
 const apiKey = '2b0178ed403a29a18c24969970737398';
 const baseUrl = 'http://api.openweathermap.org/data/2.5/weather';
 
-<<<<<<< HEAD
-async function getWeatherData(req, res) {
-  const location = req.query.location;
-
-
-  //using only finnish postal codes
-=======
 async function getWeatherData(location) {
->>>>>>> origin/Vjatšeslav
   let queryUrl;
   if (/^\d{5}(?:\d{2})?$/.test(location)) {
     queryUrl = `${baseUrl}?zip=${location},fi&appid=${apiKey}&units=metric`;
@@ -20,14 +12,9 @@ async function getWeatherData(location) {
     const [lat, lon] = location.split(',');
     queryUrl = `${baseUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
   } else {
-<<<<<<< HEAD
     queryUrl = `${baseUrl}?q=${location}&appid=${apiKey}&units=metric`;
-=======
     throw new Error('Invalid location');
->>>>>>> origin/Vjatšeslav
   }
-
-  console.log(`Fetching weather data from URL: ${queryUrl}`);
 
   try {
     const response = await axios.get(queryUrl);
@@ -46,7 +33,6 @@ async function getWeatherData(location) {
     throw new Error('Unable to fetch weather data');
   }
 }
-
 
 module.exports = {
   getWeatherData,
