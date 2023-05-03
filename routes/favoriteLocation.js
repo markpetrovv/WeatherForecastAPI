@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const favoriteLocationController = require('../controllers/favoriteLocationController');
-const { ensureAuthenticated } = require('../middlewares/authMiddleware');
+const {ensureAuthenticated} = require('../middlewares/authMiddleware');
 
 router.post('/', ensureAuthenticated, favoriteLocationController.createFavoriteLocation);
 router.get('/', ensureAuthenticated, favoriteLocationController.getFavoriteLocations);

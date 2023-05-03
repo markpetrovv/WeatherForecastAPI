@@ -1,4 +1,5 @@
 const express = require('express');
+const flash = require('connect-flash');
 const router = express.Router();
 const userController = require('../controllers/userController');
 
