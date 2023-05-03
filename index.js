@@ -7,7 +7,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 const mongoose = require('mongoose');
 const {ensureAuthenticated} = require('./middlewares/authMiddleware');
-const { init: initSocket } = require('./socketHelper'); // Add this line
+const { init: initSocket } = require('./socketHelper');
 require('dotenv').config();
 const passport = require('passport');
 const session = require('express-session');
