@@ -7,3 +7,5 @@ This project is a Weather Forecast API done by HAMK students Mark Petrov, Vjatš
   - MongoDB
   - Socket.io
   - Handlebars
+  - Passport Middleware
+  
