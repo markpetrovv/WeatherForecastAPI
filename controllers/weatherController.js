@@ -7,16 +7,16 @@ const baseUrl = 'http://api.openweathermap.org/data/2.5/weather';
 async function getWeatherData(req, res) {
   const location = req.query.location;
 
+
+  //finnish zipcodes only
   let queryUrl;
-  if (isNaN(location)) {
-    queryUrl = `${baseUrl}?q=${location}&appid=${apiKey}&units=metric`;
-  } else if (location.length === 5) {
-    queryUrl = `${baseUrl}?zip=${location}&appid=${apiKey}&units=metric`;
-  } else if (location.includes(',')) {
+  if (/^\d{5}(?:\d{2})?$/.test(location)) {
+    queryUrl = `${baseUrl}?zip=${location},fi&appid=${apiKey}&units=metric`;
+  } else if (/^-?\d+(\.\d+)?,-?\d+(\.\d+)?$/.test(location)) {
     const [lat, lon] = location.split(',');
     queryUrl = `${baseUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
   } else {
-    return res.render('weather', { error: 'Invalid location' });
+    queryUrl = `${baseUrl}?q=${location}&appid=${apiKey}&units=metric`;
   }
 
   try {
@@ -39,3 +39,4 @@ async function getWeatherData(req, res) {
 module.exports = {
   getWeatherData,
 };
+
