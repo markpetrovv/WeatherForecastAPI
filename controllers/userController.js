@@ -37,6 +37,13 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  // Invalidate the JWT token here, or clear the session (depending on your implementation).
-  res.json({ message: 'Logged out successfully' });
+  // Clear the session
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    // Display a "Logged out successfully" message
+    res.locals.message = 'Logged out successfully';
+    res.redirect('/');  // redirect to the main page
+  });
 };
