@@ -9,7 +9,7 @@
   {{#if error}}
     <p>{{error}}</p>
   {{else}}
-    <p>The temperature in {{city}}, {{country}} is {{temp}}°C</p>
+    <p>The temperature in <span id="city">{{city}}</span>, <span id="country">{{country}}</span> is <span id="temp">{{temp}}</span>°C</p>
   {{/if}}
   
   <form action="/weather" method="get">
@@ -17,5 +17,25 @@
     <input type="text" id="location" name="location" placeholder="Enter a city, zip code, or lat,lon">
     <button type="submit">Get Weather</button>
   </form>
+  <script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  socket.on('weather update', (data) => {
+    const { city, country, temp } = data;
+    const currentCity = document.querySelector('#city').textContent.toLowerCase();
+
+    if (city.toLowerCase() === currentCity) {
+      // Update the weather information on the page
+      const tempElement = document.querySelector('#temp');
+      const cityElement = document.querySelector('#city');
+      const countryElement = document.querySelector('#country');
+
+      tempElement.textContent = temp;
+      cityElement.textContent = city;
+      countryElement.textContent = country;
+    }
+  });
+</script>
 </body>
 </html>

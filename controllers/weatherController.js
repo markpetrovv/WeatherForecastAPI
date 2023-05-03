@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { broadcastWeatherUpdate } = require('../socketHelper');
 
 const apiKey = '2b0178ed403a29a18c24969970737398';
 const baseUrl = 'http://api.openweathermap.org/data/2.5/weather';
@@ -26,6 +27,7 @@ async function getWeatherData(req, res) {
       const city = data.name;
       const country = data.sys.country;
       res.render('weather', { temp, city, country });
+      broadcastWeatherUpdate(city, country, temp); // Add this line
     } else {
       res.render('weather', { error: `Error ${response.status}: ${response.statusText}` });
     }
