@@ -4,6 +4,7 @@ const app = express();
 const axios = require('axios');
 const path = require('path');
 const http = require('http');
+const flash = require('connect-flash');
 const socketIO = require('socket.io');
 const mongoose = require('mongoose');
 const {ensureAuthenticated} = require('./middlewares/authMiddleware');
@@ -46,15 +47,16 @@ app.use(
     secret: process.env.sessionSecret,
     resave: false,
     saveUninitialized: true,  // new uninitialized session will be saved
-    cookie: { maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
+    cookie: {maxAge: 24 * 60 * 60 * 1000}, // 24 hours
   })
 );
+app.use(flash());
 app.use(passport.initialize()); // passport library initialization for authentication
 app.use(passport.session());  // read and attach information to 'req.user' object
 
 // home route
 app.get('/', (req, res) => {
-  res.render('home', { user: req.session.user });
+  res.render('home', {user: req.session.user});
 });
 
 // register and log in render calls

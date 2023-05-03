@@ -29,10 +29,10 @@ async function getWeatherData(req, res) {
       res.render('weather', { temp, city, country });
       broadcastWeatherUpdate(city, country, temp); // Add this line
     } else {
-      res.render('weather', { error: `Error ${response.status}: ${response.statusText}` });
+      res.render('weather', {error: `Error ${response.status}: ${response.statusText}`});
     }
   } catch (error) {
-    res.render('weather', { error: 'Unable to fetch weather data' });
+    res.render('weather', {error: 'Unable to fetch weather data'});
   }
 }
 

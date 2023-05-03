@@ -23,8 +23,8 @@ exports.getFavoriteLocations = async (req, res) => {
 };
 
 exports.updateFavoriteLocation = async (req, res) => {
-    const { id } = req.params;
-    const { location } = req.body;
+    const {id} = req.params;
+    const {location} = req.body;
 
     try {
         const updatedFavoriteLocation = await FavoriteLocation.findByIdAndUpdate(
@@ -44,7 +44,7 @@ exports.updateFavoriteLocation = async (req, res) => {
 };
 
 exports.deleteFavoriteLocation = async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
 
     try {
       const deletedFavoriteLocation = await FavoriteLocation.findByIdAndDelete(id);

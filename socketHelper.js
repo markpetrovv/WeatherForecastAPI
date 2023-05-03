@@ -20,9 +20,9 @@ function init(server) {
 }
 
 function broadcastWeatherUpdate(city, country, temp) {
-  const data = { city, country, temp };
+  const data = {city, country, temp};
   weatherData[city.toLowerCase()] = data;
   io.emit('weather update', data);
 }
 
-module.exports = { init, broadcastWeatherUpdate };
+module.exports = {init, broadcastWeatherUpdate};
