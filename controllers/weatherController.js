@@ -1,36 +1,38 @@
 const axios = require('axios');
+const { broadcastWeatherUpdate } = require('../socketHelper');
 
 const apiKey = '2b0178ed403a29a18c24969970737398';
 const baseUrl = 'http://api.openweathermap.org/data/2.5/weather';
 
-async function getWeatherData(location) {
-  let queryUrl;
-  if (/^\d{5}(?:\d{2})?$/.test(location)) {
-    queryUrl = `${baseUrl}?zip=${location},fi&appid=${apiKey}&units=metric`;
-  } else if (/^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$/.test(location)) {
+async function getWeatherData(req, res) {
+  const location = req.query.location;
 
+  let queryUrl;
+  if (isNaN(location)) {
+    queryUrl = `${baseUrl}?q=${location}&appid=${apiKey}&units=metric`;
+  } else if (location.length === 5) {
+    queryUrl = `${baseUrl}?zip=${location}&appid=${apiKey}&units=metric`;
+  } else if (location.includes(',')) {
     const [lat, lon] = location.split(',');
     queryUrl = `${baseUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
   } else {
-    queryUrl = `${baseUrl}?q=${location}&appid=${apiKey}&units=metric`;
-    throw new Error('Invalid location');
+    return res.render('weather', { error: 'Invalid location' });
   }
 
   try {
     const response = await axios.get(queryUrl);
-    
     if (response.status === 200) {
       const data = response.data;
       const temp = data.main.temp;
       const city = data.name;
       const country = data.sys.country;
-      return { temp, city, country };
+      res.render('weather', { temp, city, country });
+      broadcastWeatherUpdate(city, country, temp); // Add this line
     } else {
-      throw new Error(`Error ${response.status}: ${response.statusText}`);
+      res.render('weather', { error: `Error ${response.status}: ${response.statusText}` });
     }
   } catch (error) {
-    console.error('Error fetching weather data:', error);
-    throw new Error('Unable to fetch weather data');
+    res.render('weather', { error: 'Unable to fetch weather data' });
   }
 }
 
