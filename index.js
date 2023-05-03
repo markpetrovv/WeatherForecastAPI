@@ -4,7 +4,7 @@ const app = express();
 const axios = require('axios');
 const path = require('path');
 const http = require('http');
-const socketIO = require('socket.io');
+const socketIo = require('socket.io');
 const mongoose = require('mongoose');
 const {ensureAuthenticated} = require('./middlewares/authMiddleware');
 const { init: initSocket } = require('./socketHelper'); // Add this line
@@ -18,7 +18,7 @@ require('./passport-config')(passport);
 const weatherController = require('./controllers/weatherController');
 const favoriteLocationRoute = require('./routes/favoriteLocation');
 const server = http.createServer(app);
-
+const io = socketIo(server);
 initSocket(server);
 
 // database connection
