@@ -1,6 +1,7 @@
 // contains CRUD functions for favourite locations
 const FavoriteLocation = require('../models/favoriteLocation');
 
+// create favorite location
 exports.createFavoriteLocation = async (req, res) => {
     const location = req.body.location;
 
@@ -13,6 +14,7 @@ exports.createFavoriteLocation = async (req, res) => {
   }
 };
 
+// get all added favorite locations
 exports.getFavoriteLocations = async (req, res) => {
     try {
         const favoriteLocations = await FavoriteLocation.find();
@@ -22,6 +24,7 @@ exports.getFavoriteLocations = async (req, res) => {
     }
 };
 
+// update favorite location
 exports.updateFavoriteLocation = async (req, res) => {
     const {id} = req.params;
     const {location} = req.body;
@@ -43,6 +46,7 @@ exports.updateFavoriteLocation = async (req, res) => {
     }
 };
 
+// delete favorite location
 exports.deleteFavoriteLocation = async (req, res) => {
     const {id} = req.params;
 

@@ -22,14 +22,14 @@ exports.login = async (req, res) => {
       return res.status(401).json({error: 'Invalid password'});
     }
 
-    // Store user information in the session
+    // user information added in the session
     req.session.user = {
       id: user._id,
       email: user.email,
       name: user.name,
     };
 
-    // Redirect user to the main page
+    // redirect logged in user to the main page
     res.redirect('/');
   } catch (err) {
     res.status(500).json({error: err.message});
@@ -37,13 +37,11 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  // Clear the session
+  // destroying the session
   req.session.destroy(err => {
     if (err) {
       return res.status(500).json({error: err.message});
     }
-    // Display a "Logged out successfully" message
-    res.locals.message = 'Logged out successfully';
-    res.redirect('/');  // redirect to the main page
+    res.redirect('/');  // redirecting to the main page
   });
 };

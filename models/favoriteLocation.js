@@ -1,4 +1,4 @@
-// the schema defines the structure of the favourite location data in DB
+// the schema structure for the favourite location data in DB
 const {Schema, model} = require('mongoose');
 
 const favoriteLocationSchema = new Schema ({

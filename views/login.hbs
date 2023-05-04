@@ -8,6 +8,21 @@
 <body>
   <header>
     <h1>Login</h1>
+    <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    main {
+      flex-grow: 1;
+    }
+    </style>
   </header>
   
   <main>
@@ -27,5 +42,8 @@
 
     <p>Don't have an account? <a href="/register">Register</a></p>
   </main>
+  <footer>
+    {{> footer}}
+  </footer>
 </body>
 </html>
